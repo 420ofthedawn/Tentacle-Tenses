@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentacle Tenses</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+</head>
+<body>
+    <div id="master-viewport">
+
+    
+<!--login page-->
+<div id="login-page" class="screen">
+    <div class="card">
+        <h1 class="primary-text">Tentacle Tenses</h1>
+        <p>Welcome back! Log in to play.</p>
+        <input type="text" id="login-name-input" placeholder="Your name..." maxlength="12">
+        
+        <p style="margin-bottom:8px; color:white;">Enter your PIN:</p>
+        <div class="pin-display" id="login-pin-display">_ _ _ _</div>
+        <div class="number-grid">
+            <button class="num-btn" onclick="loginSelectNumber('1')">1</button>
+            <button class="num-btn" onclick="loginSelectNumber('2')">2</button>
+            <button class="num-btn" onclick="loginSelectNumber('3')">3</button>
+            <button class="num-btn" onclick="loginSelectNumber('4')">4</button>
+            <button class="num-btn" onclick="loginSelectNumber('5')">5</button>
+            <button class="num-btn" onclick="loginSelectNumber('6')">6</button>
+            <button class="num-btn" onclick="loginSelectNumber('7')">7</button>
+            <button class="num-btn" onclick="loginSelectNumber('8')">8</button>
+            <button class="num-btn" onclick="loginSelectNumber('9')">9</button>
+            <button class="num-btn" onclick="loginSelectNumber('0')">0</button>
+            <button class="num-btn del-btn" onclick="loginDeleteNumber()">⌫</button>
+        </div>
+
+        <button id="login-btn" class="main-button" style="margin-top:15px;">Let's Play!</button>
+        <p style="margin-top:10px;"><span class="link-text" onclick="navigateTo('register-page')">New here? Register →</span></p>
+    </div>
+</div>
+
+<!--register page-->
+<div id="register-page" class="screen" style="display:none;">
+    <div class="card">
+        <h1 class="primary-text">Create Account</h1>
+        <p>Type your name and pick 3 emojis!</p>
+        <input type="text" id="nickname-input" placeholder="Your name..." maxlength="12">
+        <div class="pin-display" id="emoji-display">_ _ _</div>
+        <div id="emoji-grid" class="emoji-grid"></div>
+
+        <p style="margin-top:10px; margin-bottom:8px; color:white;">Choose a 4-digit PIN:</p>
+        <div class="pin-display" id="pin-dots">_ _ _ _</div>
+        <div id="number-grid" class="number-grid">
+            <button class="num-btn" onclick="selectNumber('1')">1</button>
+            <button class="num-btn" onclick="selectNumber('2')">2</button>
+            <button class="num-btn" onclick="selectNumber('3')">3</button>
+            <button class="num-btn" onclick="selectNumber('4')">4</button>
+            <button class="num-btn" onclick="selectNumber('5')">5</button>
+            <button class="num-btn" onclick="selectNumber('6')">6</button>
+            <button class="num-btn" onclick="selectNumber('7')">7</button>
+            <button class="num-btn" onclick="selectNumber('8')">8</button>
+            <button class="num-btn" onclick="selectNumber('9')">9</button>
+            <button class="num-btn" onclick="selectNumber('0')">0</button>
+            <button class="num-btn del-btn" onclick="deleteNumber()">⌫</button>
+        </div>
+
+        <button id="register-btn" class="main-button" style="margin-top:15px;">Create Account!</button>
+        <p style="margin-top:10px;"><span class="link-text" onclick="navigateTo('login-page')">Already have an account? Login →</span></p>
+    </div>
+</div>
+
+    <!-- mode selection page -->
+<div id="mode-page" class="screen" style="display:none;">
+    <div class="card">
+        <h2 class="primary-text">Choose your Mission</h2>
+        <button class="mode-btn" onclick="goToDifficulty('spelling')">Spelling Mode</button>
+        <button class="mode-btn" onclick="goToDifficulty('tenses')">Tense Mode</button>
+        <button class="mode-btn" onclick="showLeaderboard()" style="background:#444; border: 2px solid var(--green); margin-top:10px;">🏆 Leaderboard</button>
+    </div>
+</div>
+
+<!-- leaderboard page -->
+<div id="leaderboard-page" class="screen" style="display:none;">
+    <div class="card">
+        <h2 class="primary-text">🏆 Leaderboard</h2>
+        <div id="leaderboard-list" style="margin: 15px 0; text-align:left;"></div>
+        <span class="link-text" onclick="navigateTo('mode-page')">← Back</span>
+    </div>
+</div>
+
+    <!-- difficulty page -->
+    <div id="difficulty-page" class="screen" style="display:none;">
+        <div class="card">
+            <h2 class="primary-text">Select your Speed</h2>
+            <p>How fast can you shoot?</p>
+            
+            <button class="diff-btn easy" onclick="launchGame(40)">Easy (Slow)</button>
+            <button class="diff-btn medium" onclick="launchGame(80)">Medium (Normal)</button>
+            <button class="diff-btn hard" onclick="launchGame(130)">Hard (Fast!)</button>
+            
+            <span class="link-text" onclick="navigateTo('mode-page')">Back to Modes</span>
+        </div>
+    </div>
+
+    <!-- game container -->
+    <div id="game-container"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
