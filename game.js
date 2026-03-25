@@ -11,7 +11,7 @@ let score = 0;
 let lastTenResults = [];
 let targetData = null; 
 let currentLetterIndex = 0;
-let timeLeft = 90;
+let timeLeft = 1;
 let timerEvent;
 let isGameOver = false;
 let wordList = [];
@@ -126,7 +126,10 @@ function loginDeleteNumber() {
 function navigateTo(pageId) {
     document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
     // show desired screen
-    document.getElementById(pageId).style.display = 'flex';
+    const target = document.getElementById(pageId);
+    if (target) {
+        target.style.display = 'flex';
+    }
 }
 
 function goToDifficulty(mode) {
@@ -244,8 +247,6 @@ function create() {
 
     this.nextRound();
     this.time.addEvent({ delay: 1800, callback: () => spawnObject(this), loop: true });
-    this.sessionCorrect = 0;
-    this.sessionIncorrect = 0;
     
     this.timerText = this.add.text(780, 20, 'Time: 90', {fontSize: '28px', fill: '#ffffff', fontStyle: 'bold', stroke: '#000',strokeThickness: 3 }).setOrigin(1, 0);
 
@@ -302,20 +303,68 @@ function endRound(scene) {
     isGameOver = true;
     timerEvent.remove(); // stop the clock
     scene.physics.pause(); // stop all movement
-    let difficultyLevel = baseSpeed >= 120 ? 3 : baseSpeed >= 80 ? 2 : 1;
-    console.log('Saving session:', difficultyLevel, scene.sessionCorrect, scene.sessionIncorrect);
-    saveSession(difficultyLevel, scene.sessionCorrect, scene.sessionIncorrect);
-    
-    // end screen
-    let endBg = scene.add.rectangle(400, 300, 800, 600, 0x000000, 0.8);
-    scene.add.text(400, 200, 'MISSION COMPLETE!', { fontSize: '48px', fill: '#4ade80' }).setOrigin(0.5);
-    scene.add.text(400, 300, 'Final Score: ' + score, { fontSize: '32px', fill: '#fff' }).setOrigin(0.5);
-    
-    // restart button
-    let restartBtn = scene.add.text(400, 400, 'PLAY AGAIN', { fontSize: '28px', fill: '#1a1a1a', backgroundColor: '#4ade80', padding: 10 }).setOrigin(0.5).setInteractive({ useHandCursor: true }).on('pointerdown', () => {
-            window.location.reload();
+
+    // scoring system
+    let starsEarned = 0;
+    if (score >= 150) starsEarned = 5;
+    else if (score >= 100) starsEarned = 4;
+    else if (score >= 60) starsEarned = 3;
+    else if (score >= 30) starsEarned = 2;
+    else if (score > 0) starsEarned = 1;
+
+    let overlay = scene.add.rectangle(400, 300, 800, 600, 0x002b5b, 0.85);
+    let card = scene.add.rectangle(400, 300, 450, 400, 0x2d3436, 1).setStrokeStyle(4, 0x4ade80);
+
+
+    scene.add.text(400, 180, 'MISSION COMPLETE!', { 
+        fontSize: '40px', fill: '#4ade80', fontStyle: 'bold', fontFamily: 'Arial'
+    }).setOrigin(0.5);
+
+    // stars or empty circle
+    for (let i = 0; i < 5; i++) {
+        let starX = 280 + (i * 60);
+        let starChar = (i < starsEarned) ? '⭐' : '🔘'; 
+        let star = scene.add.text(starX, 280, starChar, { 
+            fontSize: '45px',
+            padding: { top: 15, bottom: 10 }
+        }).setOrigin(0.5).setAlpha(0);
+        
+        scene.tweens.add({
+            targets: star,
+            alpha: 1,
+            scale: { from: 0, to: 1 },
+            delay: i * 150,
+            duration: 400,
+            ease: 'Back.easeOut'
         });
+    }
+
+    scene.add.text(400, 360, `Final Score: ${score}`, { 
+        fontSize: '24px', fill: '#fff', fontFamily: 'Courier' 
+    }).setOrigin(0.5);
+
+    let btn = scene.add.rectangle(400, 440, 200, 60, 0x4ade80, 1).setInteractive({ useHandCursor: true });
+    scene.add.text(400, 440, 'CONTINUE', { fontSize: '20px', fill: '#1a1a1a', fontStyle: 'bold' }).setOrigin(0.5);
+
+    btn.on('pointerdown', () => {
+        document.getElementById('game-container').style.display = 'none';
+        navigateTo('next-action-page');
+        } 
+    );
 }
+
+function restartLevel() {
+    // Reset game variables
+    score = 0;
+    timeLeft = 60;
+    isGameOver = false;
+    navigateTo('none');
+    document.getElementById('game-container').style.display = 'block';
+    // Logic to restart the Phaser scene...
+    window.location.reload(); // Simplest reset for demo purposes
+}
+
+
 
 // Saves completed game session to backend
 async function saveSession(difficulty, correct, incorrect) {
@@ -485,6 +534,7 @@ Phaser.Scene.prototype.nextRound = function() {
         targetData.sentence;
     
     this.promptText.setText(task);
+    // console.log("State Updated: Moving to next question.");
 };
 
 // Fetches and displays the leaderboard

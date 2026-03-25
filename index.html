@@ -10,9 +10,17 @@
 <body>
     <div id="master-viewport">
 
-    
+<!-- start page-->
+    <div id="start-page" class="screen">
+        <div class="start-content">
+            <img src="octopus.png" id="inky-logo" alt="Inky the Octopus">
+            <h1 class="game-title">Tentacle <br>Tenses</h1>
+            <button class="start-mission-btn" onclick="navigateTo('login-page')">START MISSION</button>
+        </div>
+    </div>
+        
 <!--login page-->
-<div id="login-page" class="screen">
+<div id="login-page" class="screen" style="display:none;">
     <div class="card">
         <h1 class="primary-text">Tentacle Tenses</h1>
         <p>Welcome back! Log in to play.</p>
@@ -99,6 +107,18 @@
             <button class="diff-btn hard" onclick="launchGame(130)">Hard (Fast!)</button>
             
             <span class="link-text" onclick="navigateTo('mode-page')">Back to Modes</span>
+        </div>
+    </div>
+
+        <!-- end game navigation -->
+    <div id="next-action-page" class="screen" style="display:none;">
+        <div class="card wide-card">
+            <h2 class="primary-text">Mission Results</h2>
+            <div class="nav-button-container">
+                <button class="action-btn" onclick="launchGame()">NEXT LEVEL</button>
+                <button class="action-btn" onclick="navigateTo('mode-page')">MAIN MENU</button>
+                <button class="action-btn" onclick="goToDifficulty()">CHANGE MODE</button>
+            </div>
         </div>
     </div>
 
