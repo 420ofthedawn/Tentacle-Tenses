@@ -1,7 +1,7 @@
 const db = require('./db');
 
 const words = [
-  // DIFFICULTY 1 — Year 3
+  // DIFFICULTY 1 
   { base: 'go',      past: 'went',     participle: 'gone',      progressive: 'going',      diff: 1, year: 3 },
   { base: 'be',      past: 'was/were', participle: 'been',      progressive: 'being',      diff: 1, year: 3 },
   { base: 'have',    past: 'had',      participle: 'had',       progressive: 'having',     diff: 1, year: 3 },
@@ -22,7 +22,7 @@ const words = [
   { base: 'put',     past: 'put',      participle: 'put',       progressive: 'putting',    diff: 1, year: 3 },
   { base: 'let',     past: 'let',      participle: 'let',       progressive: 'letting',    diff: 1, year: 3 },
 
-  // DIFFICULTY 2 — Year 4
+  // DIFFICULTY 2 
   { base: 'grow',    past: 'grew',     participle: 'grown',     progressive: 'growing',    diff: 2, year: 4 },
   { base: 'draw',    past: 'drew',     participle: 'drawn',     progressive: 'drawing',    diff: 2, year: 4 },
   { base: 'throw',   past: 'threw',    participle: 'thrown',    progressive: 'throwing',   diff: 2, year: 4 },
@@ -56,7 +56,7 @@ const words = [
   { base: 'sell',    past: 'sold',     participle: 'sold',      progressive: 'selling',    diff: 2, year: 4 },
   { base: 'read',    past: 'read',     participle: 'read',      progressive: 'reading',    diff: 2, year: 4 },
 
-  // DIFFICULTY 3 — Year 5-6
+  // DIFFICULTY 3 
   { base: 'speak',   past: 'spoke',    participle: 'spoken',    progressive: 'speaking',   diff: 3, year: 5 },
   { base: 'break',   past: 'broke',    participle: 'broken',    progressive: 'breaking',   diff: 3, year: 5 },
   { base: 'wake',    past: 'woke',     participle: 'woken',     progressive: 'waking',     diff: 3, year: 5 },
