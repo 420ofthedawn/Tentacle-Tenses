@@ -11,7 +11,7 @@ let score = 0;
 let lastTenResults = [];
 let targetData = null; 
 let currentLetterIndex = 0;
-let timeLeft = 1;
+let timeLeft = 90;
 let timerEvent;
 let isGameOver = false;
 let wordList = [];
